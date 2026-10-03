@@ -1,0 +1,407 @@
+@font-face {
+    font-family: Roboto;
+    src: url('./fonts/Roboto-Regular.woff2')format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url('./fonts/Roboto-Regular.woff2')format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/**
+  Нормализация блочной модели
+ */
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+    padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure, fieldset):where([class]) {
+    margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol,
+    dl):where([class]) {
+    margin-block: 0;
+}
+
+:where(dd[class]) {
+    margin-left: 0;
+}
+
+:where(fieldset[class]) {
+    padding: 0;
+    border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+    list-style: none;
+}
+
+:where(address[class]) {
+    font-style: normal;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+    --paragraphMarginBottom: 24px;
+
+    margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+    margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+  Упрощаем работу с изображениями и видео
+ */
+img,
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+    font: inherit;
+}
+
+html {
+    /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+    height: 100%;
+    /**
+    Убираем скачок интерфейса по горизонтали
+    при появлении / исчезновении скроллбара
+   */
+    scrollbar-gutter: stable;
+    /**
+    Плавный скролл
+   */
+    scroll-behavior: smooth;
+}
+
+body {
+    /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+    min-height: 100%;
+    /**
+    Унифицированный интерлиньяж
+   */
+    line-height: 1.5;
+}
+
+/**
+  Нормализация высоты элемента ссылки при его инспектировании в DevTools
+ */
+a:where([class]) {
+    display: inline-flex;
+}
+
+/**
+  Курсор-рука при наведении на элемент
+ */
+button,
+label {
+    cursor: pointer;
+}
+
+/**
+  Убирает серую подсветку при тапе на мобильных устройствах (iOS/Android)
+ */
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут fill со значением 'none' или начинается с 'url')
+ */
+:where([fill]:not([fill="none"],
+        [fill^="url"])) {
+    fill: currentColor;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут stroke со значением 'none')
+ */
+:where([stroke]:not([stroke="none"],
+        [stroke^="url"])) {
+    stroke: currentColor;
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+    transition-property: fill, stroke;
+}
+
+/**
+  Приведение рамок таблиц в классический 'collapse' вид
+ */
+:where(table) {
+    border-collapse: collapse;
+    border-color: currentColor;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+:root {
+    --color-dark: #000000;
+    --color-light: #FFFFFF;
+    --color-light-gray: #EEEFF1;
+    --color-dark-gray: #727272;
+    --color-dark-blue: #34547A;
+    --color-silver-light: #ffffff6c;
+
+    --border: 1px solid var(--color-light);
+    --font-family-base: 'Roboto', sans-serif;
+
+    /* --input-height:65px; */
+
+    --container-width: 1120px;
+    --container-padding-x: 16px;
+
+    --transition-duration: 0.2s;
+}
+
+body {
+    background-color: var(--color-light-gray);
+    font-family: var(--font-family-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.64;
+    color: var(--color-dark-gray);
+}
+
+.about_me {
+    max-width: 540px;
+    margin-inline: auto;
+    text-align: center;
+    margin-block: clamp(3rem, 7vw + 1rem, 8.75rem) clamp(3rem, 7vw + 1rem, 8.75rem);
+}
+
+.menu_container{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: space-between;
+    max-width: 35.31rem;
+    padding: 0;
+    padding-block: clamp(1.8rem, 4vw + 1rem, 4.93rem) clamp(3rem, 7vw + 1rem, 8.75rem);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-dark);
+    text-transform: uppercase;
+    color: var(--color-dark);
+}
+
+h2,
+h3 {
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+h1 {
+    font-weight: 500;
+    color: var(--color-dark);
+    font-size: 3rem;
+}
+
+a:hover {
+    color: var(--color-dark-blue);
+    transition-duration: var(--transition-duration);
+    font-size: 1.5rem;
+}
+
+header {
+    min-height: 700px;
+}
+
+.intro_text {
+    max-width: 33.75rem;
+}
+
+.intro_button {
+    margin-block: clamp(1.8rem, 4vw + 1rem, 4.93rem) clamp(3rem, 7vw + 1rem, 8.75rem);
+    width: 14.06rem;
+    height: 4.06rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    background-color: var(--color-dark-blue);
+    color: var(--color-light);
+    border: var(--border);
+}
+
+.container {
+    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+    padding-inline: var(--container-padding-x);
+    margin-inline: auto;
+    
+}
+
+main {
+    background-color: var(--color-silver-light);
+    height: auto;
+    min-height: 21.85rem;
+    display: flex;
+    align-items: center;
+}
+
+.project {
+    background-color: var(--color-dark-blue);
+    height: auto;
+    min-height: 15.62rem;
+    padding-block: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 0;
+}
+.icon>li {
+    display: flex;
+    width: 141px;
+    height: 50px;
+}
+.number{
+    width: 36px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    font-size: 21px;
+    color: var(--color-light);
+    margin-left: 10px;
+}
+.text_project{
+    width: 71px;
+    height: 19px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    color: var(--color-light);
+}
+.icon_project {
+    width: 8.12rem;
+    height: 3.12rem;
+}
+.project_info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.item{
+    max-width: 540px;
+    margin-inline: auto;
+    text-align: center;
+    margin-block: clamp(3rem, 7vw + 1rem, 8.75rem) clamp(3rem, 7vw + 1rem, 8.75rem);
+}
+.container>iframe{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1110 / 600;
+    margin-inline: auto;
+    margin-bottom: clamp(3rem, 7vw + 1rem, 8.75rem);
+    border: none;
+}
+footer{
+    padding-block: clamp(3rem, 7vw + 1rem, 8.75rem) clamp(3rem, 7vw + 1rem, 8.75rem);
+    background-color: var(--color-dark-blue);
+}
+.footer_author{
+    color: var(--color-light);
+    font-weight: 500;
+    font-size: 21px;
+}
+.footer_copy{
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-light);
+}
